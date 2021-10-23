@@ -6,8 +6,6 @@ using UnityEngine.UI;
 public class UIController : MonoBehaviour
 {
     // Events
-    public delegate void PlayerAction();
-    public static event PlayerAction OnTapped;
     public delegate void FadeAction();
     public static event FadeAction OnFadingFinished; 
 
@@ -35,7 +33,6 @@ public class UIController : MonoBehaviour
                 Destroy(this.gameObject);
             }
         }
-        //DontDestroyOnLoad(this.gameObject);
     }
 
     private void Start()
@@ -43,37 +40,6 @@ public class UIController : MonoBehaviour
         dialogBox = transform.GetComponentInChildren<DialogBox>();
     }
     
-    void Update()
-    {
-        if (Input.touchCount > 0)
-        {
-            Touch touch = Input.GetTouch(0);
-
-            if (touch.phase == TouchPhase.Began)
-            {
-                //leftCharacter.SwitchState();
-                if (OnTapped != null) OnTapped();
-            }
-        }
-    }
-
-    // private string SetNextMessage(string messageIn) => dialogBox.nextMessage = messageIn;
-
-    // public void ShowMessage(string content)
-    // {
-    //     dialogBox.fadeSpeed = 5f;
-    //     StopAllCoroutines();
-    //     StartCoroutine(dialogBox.TypeSentence(SetNextMessage(content)));
-    // }
-
-    //public void HideMessage() => dialogBox.fadeSpeed = -5f;
-
-    // public void SkipMessageAnimation()
-    // {
-    //     StopAllCoroutines();
-    //     dialogBox.message.text = dialogBox.nextMessage;
-    // }
-
     public void SetOptionTextAndFlagImage(Flag question, int answer)
     {
         // Set options
@@ -119,7 +85,7 @@ public class UIController : MonoBehaviour
     public void ShowQuestion()
     {
         StartCoroutine(leftCharacter.Move(true, 0.8f));
-        // TODO: Update Speaker's Name
+        dialogBox.SetSpeaker("Dr. Flag");
         StartCoroutine(DoFade(dialogBox.gameObject.GetComponent<CanvasGroup>(), 0.0f, 1.0f, 0.5f));
         StartCoroutine(dialogBox.TypeSentence(MessageStrings.flagQuestion[Random.Range(0, MessageStrings.flagQuestion.Length - 1)]));
     }
@@ -127,14 +93,14 @@ public class UIController : MonoBehaviour
     public void ShowPlayerAnswer(int clickedButton)
     {
         StartCoroutine(rightCharacter.Move(true, 0.8f));
-        // TODO: Update Speaker's Name
+        dialogBox.SetSpeaker("You");
         StartCoroutine(dialogBox.TypeSentence(MessageStrings.playerAnswer[Random.Range(0, MessageStrings.playerAnswer.Length - 1)] + buttonText[clickedButton].text));
     }
 
     public void ShowResult(int playerAnswer, int correctAnswer)
     {
         StopAllCoroutines();
-        // TODO: Update Speaker's Name
+        dialogBox.SetSpeaker("Dr. Flag");
         if (playerAnswer == correctAnswer) StartCoroutine(dialogBox.TypeSentence(MessageStrings.answer[0] + buttonText[correctAnswer].text));
         else StartCoroutine(dialogBox.TypeSentence(MessageStrings.answer[1] + buttonText[correctAnswer].text));
     }

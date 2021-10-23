@@ -37,7 +37,6 @@ public class GameController : MonoBehaviour
                 Destroy(this.gameObject);
             }
         }
-        //DontDestroyOnLoad(this.gameObject);
 
         UIController.OnFadingFinished += DoNextStepAfterFading;
     }
@@ -82,11 +81,6 @@ public class GameController : MonoBehaviour
         UIController.instance.HideButtons();
         UIController.instance.ShowPlayerAnswer(pickedAnswer);
         playerAnswer = pickedAnswer;
-        // if (pickedAnswer == answer)
-        // {
-        //     Debug.Log("答對了");
-        //     SetNextQuestion();
-        // }
     }
 
     private void SetNextQuestion()

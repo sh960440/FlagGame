@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: CostaRica
   m_EditorClassIdentifier: 
   flagSprite: {fileID: 21300000, guid: a15443b147d78f5418489a9e51d31676, type: 3}
-  flagName: CostaRica
+  flagName: Costa Rica
